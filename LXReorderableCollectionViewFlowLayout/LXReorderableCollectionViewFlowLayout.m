@@ -416,6 +416,15 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
             
             [self invalidateLayoutIfNecessary];
             
+            // get the content size and inset of the scroll view
+            CGSize contentSize = self.collectionView.contentSize;
+            UIEdgeInsets contentInset = self.collectionView.contentInset;
+            
+            // determine if we are scrollable
+            if ( contentSize.height + contentInset.top + contentInset.bottom <= CGRectGetHeight(self.collectionView.frame) )  {
+                return;
+            }
+            
             switch (self.scrollDirection) {
                 case UICollectionViewScrollDirectionVertical: {
                     if (viewCenter.y < (CGRectGetMinY(self.collectionView.bounds) + self.scrollingTriggerEdgeInsets.top)) {
